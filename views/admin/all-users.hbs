@@ -1,0 +1,77 @@
+<section class="intro bg-image" style="background-color: #c3d8fc;">
+  <div class="" >
+    <div class="">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 mt-3">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <thead>
+                      <tr>
+                        <th>User Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">remove button</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                        {{#each response}}
+                      <tr>
+                        <td>{{this._id}}</td>
+                        <td id="{{this._id}}">{{this.Name}}</td>
+                        <td>{{this.Email}}</td>
+                        <td>
+                          <button type="button" class="btn btn-danger" onclick="removeUser('{{this._id}}')">remove user</button>
+                        </td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+html,
+body,
+.intro {
+  height: 100%;
+}
+
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card {
+  border-radius: .5rem;
+}
+
+{{!--  --}}
+</style>
+<script>
+    function removeUser(userID){
+        let name=document.getElementById(userID).innerHTML
+        console.log(name)
+        $.ajax({
+            url:'/admin/remove-user/'+userID,
+            method:'get',
+            success:(response)=>{
+                if(response.status){
+                    alert('the user '+name+' is removed')
+                    location.reload()
+                }
+                
+            }
+        })
+    }
+</script>
